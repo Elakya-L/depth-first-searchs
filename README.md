@@ -59,55 +59,37 @@ Now, the Stack becomes empty, which means we have visited all the nodes, and our
   <tr>
     <td>
 <pre>
-from collections import deque
 from collections import defaultdict
 
-def bfs(graph, start, visited, path):
-    queue = deque()
-
-    queue.append(start)
-    visited[start] = True
+def dfs(graph, start, visited, path):
     path.append(start)
+    visited[start] = True
 
-    while queue:
-        node = queue.popleft()
-
-        for neighbour in graph[node]:
-            if not visited[neighbour]:
-                visited[neighbour] = True
-                queue.append(neighbour)
-                path.append(neighbour)
+    for neighbour in graph[start]:
+        if not visited[neighbour]:
+            dfs(graph, neighbour, visited, path)
 
     return path
 
 graph = defaultdict(list)
 
-#Input number of vertices and edges
-v, e = map(int, input().split())
+n, e = map(int, input().split())
 
-#Input edges
 for i in range(e):
     u, v = input().split()
     graph[u].append(v)
     graph[v].append(u)
 
-#Starting vertex
-if '0' in graph:
-    start = '0'
-else:
-    start = 'A'
-
+start = "A"
 visited = defaultdict(bool)
 path = []
 
-traversal = bfs(graph, start, visited, path)
-
-print(traversal)
+traversedpath = dfs(graph, start, visited, path)
+print(traversedpath)
 </pre>
     </td>
   </tr>
 </table>
-
 <hr>
 <h3>Sample Input</h3>
 <hr>
